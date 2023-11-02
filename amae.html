@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>توزيع الصفحات</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+        }
+
+        .rtl-text {
+            direction: rtl;
+            color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <input id="مدخل_اليوم" type="text" style="font-family: Arial; font-size: 16px; padding: 8px; margin-bottom: 20px;">
+    <button onclick="عرض_الصفحات()">عرض الصفحات</button>
+    <div id="نافذة_النتائج" style="margin-top: 20px;"></div>
+
+    <script>
+        function عرض_الصفحات() {
+            var اسماء = [
+                "شهندا", "ناديا", "حنان", "انتصار", "رفيف", "منتهى", "ثراء", "ليلى",
+                "ملاك", "اسیل", "شکریه", "جوانا", "قصيه", "ايه", "زينب", "میار",
+                "الما", "سندس", "سجی", "ريماس", "مرام", "سديل", "دلال"
+            ];
+            var صفحات_الكتاب = 604;
+            var صفحات_لكل_شخص = 3;
+            var مدخل_اليوم = parseInt(document.getElementById("مدخل_اليوم").value) - 1;
+            var نافذة_النتائج = document.getElementById("نافذة_النتائج");
+            نافذة_النتائج.innerHTML = "";
+            for (var i = 0; i < اسماء.length; i++) {
+                var بداية_الصفحة = (مدخل_اليوم * اسماء.length * صفحات_لكل_شخص) + (i * صفحات_لكل_شخص) + 1;
+                var نهاية_الصفحة = بداية_الصفحة + صفحات_لكل_شخص - 1;
+                if (نهاية_الصفحة <= صفحات_الكتاب) {
+                    var الصفحات = Array.from({ length: صفحات_لكل_شخص }, (_, index) => بداية_الصفحة + index);
+                    var نص = "الاسم: " + اسماء[i] + "، سيقرأ الصفحات التالية: " + الصفحات.join("، ") + "<br><br>";
+                } else {
+                    var نص = "الاسم: " + اسماء[i] + "، قد انتهت الكتاب.<br><br>";
+                }
+                var div = document.createElement("div");
+                div.className = "rtl-text";
+                div.innerHTML = نص;
+                نافذة_النتائج.appendChild(div);
+            }
+        }
+    </script>
+</body>
+
+</html>
